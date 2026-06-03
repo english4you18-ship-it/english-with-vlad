@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English with Vlad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F9F5EE;
+    --dark: #1A1A2E;
+    --gold: #C9A84C;
+    --terracotta: #C4622D;
+    --text: #2D2D2D;
+    --muted: #7A7A7A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(249,245,238,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    gap: 1rem;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); }
+  .nav-logo .logo-with { font-style: italic; font-size: 0.85em; color: var(--muted); font-weight: 300; letter-spacing: 0.01em; margin: 0 0.05em; }
+  .nav-logo .logo-name { color: var(--dark); }
+  .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+
+  .lang-toggle { display: flex; border: 1.5px solid rgba(26,26,46,0.2); overflow: hidden; flex-shrink: 0; }
+  .lang-btn { background: transparent; border: none; cursor: pointer; padding: 0.45rem 0.85rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--dark); color: var(--cream); }
+  .lang-btn:not(.active):hover { background: rgba(26,26,46,0.06); color: var(--dark); }
+
+  .nav-cta { background: var(--dark); color: var(--cream); border: none; cursor: pointer; padding: 0.6rem 1.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: background 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: var(--terracotta); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 60%); pointer-events: none; }
+
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 4rem 6rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); padding: 0.35rem 0.9rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 1.8rem; width: fit-content; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 4vw, 3.8rem); line-height: 1.15; color: var(--dark); margin-bottom: 1.3rem; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 420px; margin-bottom: 2.2rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary { background: var(--terracotta); color: white; border: none; cursor: pointer; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 18px rgba(196,98,45,0.22); }
+  .btn-primary:hover { background: #b05525; transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--dark); border: 1.5px solid rgba(26,26,46,0.3); cursor: pointer; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--dark); background: var(--dark); color: var(--cream); }
+
+  /* HERO RIGHT — clean info card */
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 4rem 5rem 4rem 2rem; }
+  .info-card { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 1px; }
+  .info-row { background: white; padding: 1.4rem 1.6rem; border-left: 3px solid transparent; transition: border-color 0.2s; }
+  .info-row:hover { border-left-color: var(--gold); }
+  .info-row-icon { font-size: 1.2rem; margin-bottom: 0.4rem; }
+  .info-row-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; margin-bottom: 0.2rem; }
+  .info-row-value { font-size: 0.95rem; color: var(--dark); font-weight: 500; }
+  .info-row-value small { display: block; font-size: 0.82rem; color: var(--muted); font-weight: 400; margin-top: 0.15rem; }
+
+  /* SECTIONS */
+  .section { padding: 5.5rem 6rem; }
+  .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--gold); font-weight: 600; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 2.8vw, 2.6rem); color: var(--dark); line-height: 1.2; margin-bottom: 0.9rem; }
+  .section-sub { font-size: 1rem; color: var(--muted); max-width: 480px; line-height: 1.7; margin-bottom: 3rem; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: rgba(26,26,46,0.08); }
+  .service-card { background: var(--cream); padding: 2.2rem 1.8rem; position: relative; overflow: hidden; transition: background 0.2s; }
+  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: var(--gold); transition: width 0.3s; }
+  .service-card:hover { background: white; }
+  .service-card:hover::after { width: 100%; }
+  .service-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .service-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.6rem; }
+  .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+  .service-tag { display: inline-block; margin-top: 0.9rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--terracotta); font-weight: 600; }
+
+  /* WHY */
+  .why-section { padding: 5.5rem 6rem; background: var(--dark); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .why-section .section-title { color: #fff; }
+  .why-section .section-sub { color: rgba(255,255,255,0.55); }
+  .why-list { display: flex; flex-direction: column; gap: 1.6rem; }
+  .why-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .why-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); opacity: 0.45; line-height: 1; flex-shrink: 0; width: 2rem; }
+  .why-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; color: #fff; }
+  .why-text p { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { padding: 5.5rem 6rem; background: white; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin-top: 3rem; }
+  .testimonial-card { border: 1px solid rgba(26,26,46,0.08); padding: 1.8rem; transition: box-shadow 0.2s, transform 0.2s; }
+  .testimonial-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .t-stars { color: var(--gold); font-size: 0.82rem; margin-bottom: 0.9rem; }
+  .t-quote { font-size: 0.9rem; line-height: 1.7; color: var(--text); margin-bottom: 1.3rem; font-style: italic; }
+  .t-author { font-size: 0.8rem; font-weight: 600; color: var(--dark); text-transform: uppercase; letter-spacing: 0.05em; }
+  .t-result { font-size: 0.76rem; color: var(--terracotta); margin-top: 0.2rem; font-weight: 500; }
+
+  /* HOW IT WORKS */
+  .steps-section { padding: 5.5rem 6rem; }
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; }
+  .step { text-align: center; }
+  .step-num { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold); opacity: 0.35; line-height: 1; margin-bottom: 0.8rem; }
+  .step h4 { font-size: 0.95rem; font-weight: 600; color: var(--dark); margin-bottom: 0.4rem; }
+  .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section { padding: 5rem 6rem; background: var(--terracotta); text-align: center; }
+  .cta-section .section-label { color: rgba(255,255,255,0.55); }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); color: white; line-height: 1.2; margin-bottom: 0.9rem; }
+  .cta-section > p { font-size: 0.98rem; color: rgba(255,255,255,0.72); margin-bottom: 2.2rem; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .btn-white { background: white; color: var(--terracotta); border: none; cursor: pointer; padding: 1rem 2.6rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 18px rgba(0,0,0,0.12); }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(0,0,0,0.18); }
+  .cta-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(249,245,238,0.45); padding: 2.5rem 6rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--cream); }
+  .footer-logo .logo-with { font-style: italic; font-size: 0.85em; color: rgba(249,245,238,0.35); font-weight: 300; margin: 0 0.05em; }
+  .footer-logo .logo-name { color: var(--cream); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,26,46,0.7); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 1rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--cream); padding: 2.8rem; max-width: 460px; width: 100%; position: relative; animation: slideUp 0.28s ease; }
+  @keyframes slideUp { from { transform: translateY(28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 1.1rem; right: 1.4rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); line-height: 1; }
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--dark); margin-bottom: 0.4rem; }
+  .modal > p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.6rem; }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; color: var(--dark); margin-bottom: 0.35rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 0.9rem; border: 1.5px solid rgba(26,26,46,0.14); background: white; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); outline: none; transition: border-color 0.2s; appearance: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 75px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .modal .btn-primary { width: 100%; margin-top: 0.4rem; }
+
+  /* PRICING */
+  .pricing-section { padding: 5.5rem 6rem; background: white; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px; background: rgba(26,26,46,0.08); margin-top: 3rem; }
+  .price-card { background: white; padding: 2rem 1.8rem; position: relative; transition: background 0.2s; }
+  .price-card:hover { background: var(--cream); }
+  .price-card.featured { background: var(--dark); }
+  .price-card.featured:hover { background: #22223e; }
+  .price-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .price-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 1.2rem; }
+  .price-card.featured .price-title { color: var(--cream); }
+  .price-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.55rem 0; border-bottom: 1px solid rgba(26,26,46,0.07); }
+  .price-card.featured .price-row { border-bottom-color: rgba(255,255,255,0.08); }
+  .price-row:last-of-type { border-bottom: none; }
+  .price-duration { font-size: 0.82rem; color: var(--muted); }
+  .price-card.featured .price-duration { color: rgba(249,245,238,0.5); }
+  .price-amount { font-size: 1rem; font-weight: 600; color: var(--dark); white-space: nowrap; }
+  .price-card.featured .price-amount { color: var(--gold); }
+  .price-note { font-size: 0.75rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
+  .price-card.featured .price-note { color: rgba(249,245,238,0.4); }
+
+  .lang-fade { transition: opacity 0.18s ease; }
+  .lang-fade.fading { opacity: 0; }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 2rem 2rem; }
+    .hero-right { padding: 2rem; justify-content: flex-start; }
+    .info-card { max-width: 100%; }
+    .section { padding: 4rem 2rem; }
+    .why-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; gap: 1px; }
+    .testimonials-section { padding: 4rem 2rem; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .steps-section { padding: 4rem 2rem; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-section { padding: 4rem 2rem; }
+    .pricing-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { padding: 4rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .nav-cta { display: none; }
+  }
+  @media (max-width: 480px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.2rem; }
+  }
+</style>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">English <span class="logo-with">with</span> <span class="logo-name">Vlad</span></div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">RU</button>
+    </div>
+    <button class="nav-cta" onclick="openCal(event)" data-t="nav_cta"></button>
+  </div>
+</nav>
+
+<section class="hero lang-fade" id="page-body">
+  <div class="hero-left">
+    <div class="hero-badge" data-t="hero_badge"></div>
+    <h1 data-t="hero_h1_html"></h1>
+    <p class="hero-sub" data-t="hero_sub"></p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openCal(event)" data-t="hero_btn_primary"></button>
+      <button class="btn-secondary" onclick="document.getElementById('services').scrollIntoView()" data-t="hero_btn_secondary"></button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="info-card">
+      <div class="info-row">
+        <div class="info-row-icon">🌐</div>
+        <div class="info-row-label" data-t="ic1_label"></div>
+        <div class="info-row-value" data-t="ic1_value"></div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-icon">💼</div>
+        <div class="info-row-label" data-t="ic2_label"></div>
+        <div class="info-row-value" data-t="ic2_value">
+          <small data-t="ic2_small"></small>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-icon">👥</div>
+        <div class="info-row-label" data-t="ic3_label"></div>
+        <div class="info-row-value" data-t="ic3_value"></div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-icon">🎁</div>
+        <div class="info-row-label" data-t="ic4_label"></div>
+        <div class="info-row-value" data-t="ic4_value">
+          <small data-t="ic4_small"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-label" data-t="srv_label"></div>
+  <h2 class="section-title" data-t="srv_title"></h2>
+  <p class="section-sub" data-t="srv_sub"></p>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">💼</div><h3 class="service-title" data-t="s1_title"></h3><p class="service-desc" data-t="s1_desc"></p><span class="service-tag" data-t="s1_tag"></span></div>
+    <div class="service-card"><div class="service-icon">📊</div><h3 class="service-title" data-t="s2_title"></h3><p class="service-desc" data-t="s2_desc"></p><span class="service-tag" data-t="s2_tag"></span></div>
+    <div class="service-card"><div class="service-icon">✈️</div><h3 class="service-title" data-t="s3_title"></h3><p class="service-desc" data-t="s3_desc"></p><span class="service-tag" data-t="s3_tag"></span></div>
+    <div class="service-card"><div class="service-icon">🎓</div><h3 class="service-title" data-t="s4_title"></h3><p class="service-desc" data-t="s4_desc"></p><span class="service-tag" data-t="s4_tag"></span></div>
+    <div class="service-card"><div class="service-icon">👶</div><h3 class="service-title" data-t="s5_title"></h3><p class="service-desc" data-t="s5_desc"></p><span class="service-tag" data-t="s5_tag"></span></div>
+    <div class="service-card"><div class="service-icon">🎯</div><h3 class="service-title" data-t="s6_title"></h3><p class="service-desc" data-t="s6_desc"></p><span class="service-tag" data-t="s6_tag"></span></div>
+  </div>
+</section>
+
+<section class="why-section">
+  <div>
+    <div class="section-label" data-t="why_label"></div>
+    <h2 class="section-title" data-t="why_title"></h2>
+    <p class="section-sub" data-t="why_sub"></p>
+  </div>
+  <div class="why-list">
+    <div class="why-item"><div class="why-num">01</div><div class="why-text"><h4 data-t="w1_h"></h4><p data-t="w1_p"></p></div></div>
+    <div class="why-item"><div class="why-num">02</div><div class="why-text"><h4 data-t="w2_h"></h4><p data-t="w2_p"></p></div></div>
+    <div class="why-item"><div class="why-num">03</div><div class="why-text"><h4 data-t="w3_h"></h4><p data-t="w3_p"></p></div></div>
+    <div class="why-item"><div class="why-num">04</div><div class="why-text"><h4 data-t="w4_h"></h4><p data-t="w4_p"></p></div></div>
+  </div>
+</section>
+
+<section class="testimonials-section" id="testimonials">
+  <div class="section-label" data-t="t_label"></div>
+  <h2 class="section-title" data-t="t_title"></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card"><div class="t-stars">★★★★★</div><p class="t-quote" data-t="t1_quote"></p><div class="t-author" data-t="t1_author"></div><div class="t-result" data-t="t1_result"></div></div>
+    <div class="testimonial-card"><div class="t-stars">★★★★★</div><p class="t-quote" data-t="t2_quote"></p><div class="t-author" data-t="t2_author"></div><div class="t-result" data-t="t2_result"></div></div>
+    <div class="testimonial-card"><div class="t-stars">★★★★★</div><p class="t-quote" data-t="t3_quote"></p><div class="t-author" data-t="t3_author"></div><div class="t-result" data-t="t3_result"></div></div>
+  </div>
+</section>
+
+<section class="steps-section">
+  <div class="section-label" data-t="how_label"></div>
+  <h2 class="section-title" data-t="how_title"></h2>
+  <div class="steps-grid">
+    <div class="step"><div class="step-num">1</div><h4 data-t="step1_h"></h4><p data-t="step1_p"></p></div>
+    <div class="step"><div class="step-num">2</div><h4 data-t="step2_h"></h4><p data-t="step2_p"></p></div>
+    <div class="step"><div class="step-num">3</div><h4 data-t="step3_h"></h4><p data-t="step3_p"></p></div>
+    <div class="step"><div class="step-num">4</div><h4 data-t="step4_h"></h4><p data-t="step4_p"></p></div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="section-label" data-t="price_label"></div>
+  <h2 class="section-title" data-t="price_title"></h2>
+  <p class="section-sub" data-t="price_sub"></p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-icon">📚</div>
+      <div class="price-title" data-t="p1_title"></div>
+      <div class="price-row"><span class="price-duration" data-t="p_60min"></span><span class="price-amount">600 CZK</span></div>
+      <div class="price-row"><span class="price-duration" data-t="p_90min"></span><span class="price-amount">800 CZK</span></div>
+      <div class="price-note" data-t="p1_note"></div>
+    </div>
+    <div class="price-card featured">
+      <div class="price-icon">📊</div>
+      <div class="price-title" data-t="p2_title"></div>
+      <div class="price-row"><span class="price-duration" data-t="p_60min"></span><span class="price-amount">700 CZK</span></div>
+      <div class="price-row"><span class="price-duration" data-t="p_90min"></span><span class="price-amount">900 CZK</span></div>
+      <div class="price-note" data-t="p2_note"></div>
+    </div>
+    <div class="price-card">
+      <div class="price-icon">💼</div>
+      <div class="price-title" data-t="p3_title"></div>
+      <div class="price-row"><span class="price-duration" data-t="p_from"></span><span class="price-amount">900 CZK</span></div>
+      <div class="price-note" data-t="p3_note"></div>
+    </div>
+    <div class="price-card">
+      <div class="price-icon">👶</div>
+      <div class="price-title" data-t="p4_title"></div>
+      <div class="price-row"><span class="price-duration" data-t="p_60min"></span><span class="price-amount">500 CZK</span></div>
+      <div class="price-row"><span class="price-duration" data-t="p_90min"></span><span class="price-amount">700 CZK</span></div>
+      <div class="price-note" data-t="p4_note"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-label" data-t="cta_label"></div>
+  <h2 data-t="cta_h2_html"></h2>
+  <p data-t="cta_p"></p>
+  <button class="btn-white" onclick="openCal(event)" data-t="cta_btn"></button>
+  <p class="cta-note" data-t="cta_note"></p>
+</section>
+
+<footer>
+  <div class="footer-logo">English <span class="logo-with">with</span> <span class="logo-name">Vlad</span></div>
+  <div data-t="footer_mid"></div>
+  <div data-t="footer_copy"></div>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-inner">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3 data-t="modal_h3"></h3>
+    <p data-t="modal_p"></p>
+    <!-- Netlify Forms: the netlify attribute + hidden form-name field wire this up automatically -->
+    <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="form-name" value="booking">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label data-t="form_fname"></label>
+          <input type="text" name="first-name" data-placeholder-t="form_fname_ph" required>
+        </div>
+        <div class="form-group">
+          <label data-t="form_lname"></label>
+          <input type="text" name="last-name" data-placeholder-t="form_lname_ph">
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-t="form_email"></label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label data-t="form_phone"></label>
+        <input type="tel" name="phone" data-placeholder-t="form_phone_ph">
+      </div>
+      <div class="form-group">
+        <label data-t="form_contact_label"></label>
+        <select name="preferred-contact">
+          <option data-t="fc1"></option><option data-t="fc2"></option><option data-t="fc3"></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-t="form_interest_label"></label>
+        <select name="interest">
+          <option data-t="fi1"></option><option data-t="fi2"></option><option data-t="fi3"></option>
+          <option data-t="fi4"></option><option data-t="fi5"></option><option data-t="fi6"></option><option data-t="fi7"></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-t="form_notes_label"></label>
+        <textarea name="notes" data-placeholder-t="form_notes_ph"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" data-t="form_submit"></button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openCal(e) {
+  e.preventDefault();
+  Calendly.initPopupWidget({ url: 'https://calendly.com/english4you18' });
+}
+
+const i18n = {
+  en: {
+    nav_cta: "Book a Trial",
+    hero_badge: "Former US Corporate Recruiter · Online",
+    hero_h1_html: "Speak English with <em>real confidence</em>",
+    hero_sub: "One-on-one lessons focused on what actually matters to you — job interviews, professional communication, travel, or everyday fluency. Adults and children welcome.",
+    hero_btn_primary: "Book a Free Trial Lesson",
+    hero_btn_secondary: "See What I Teach",
+    ic1_label: "Format",
+    ic1_value: "100% online — Zoom, Google Meet or VooV",
+    ic2_label: "Background",
+    ic2_value: "Former recruiter, American company",
+    ic2_small: "I know what employers actually listen for",
+    ic3_label: "Students",
+    ic3_value: "Adults & children, all levels",
+    ic4_label: "First lesson",
+    ic4_value: "Free trial — no commitment",
+    ic4_small: "See if we're a good fit before you decide",
+    srv_label: "What I teach",
+    srv_title: "Lessons built around your goals",
+    srv_sub: "Each session is personalised — no generic textbook lessons.",
+    s1_title: "Interview Preparation",
+    s1_desc: "I spent years recruiting for an American company. I'll help you structure your answers, improve your tone, and walk into any interview feeling prepared.",
+    s1_tag: "Adults · All levels",
+    s2_title: "Business English",
+    s2_desc: "Emails, presentations, meetings, negotiations. Focus on sounding natural and professional — not like you're reading from a phrasebook.",
+    s2_tag: "Adults · Professionals",
+    s3_title: "English for Travel",
+    s3_desc: "Airports, hotels, small talk, unexpected situations. Build enough confidence to handle whatever comes up on your next trip.",
+    s3_tag: "Adults & teens",
+    s4_title: "University Admissions",
+    s4_desc: "Motivation letters, entrance interviews, academic writing. My students have been accepted to universities across Europe.",
+    s4_tag: "Students · Young adults",
+    s5_title: "English for Children",
+    s5_desc: "Fun, age-appropriate lessons that make kids actually want to learn. Games, stories, and conversation — no boring drills.",
+    s5_tag: "Kids · All ages",
+    s6_title: "General & Exam English",
+    s6_desc: "Whether you want to improve day-to-day communication or prepare for Cambridge, IELTS, or TOEFL — we work at your pace.",
+    s6_tag: "All ages · All levels",
+    why_label: "A bit about me",
+    why_title: "Teaching from real experience",
+    why_sub: "My background isn't just teaching — it's the professional world where English makes the difference.",
+    w1_h: "Worked in recruitment at a US company",
+    w1_p: "I worked in recruitment with an American team, which gave me a clear picture of what confident, professional English sounds like.",
+    w2_h: "Students who got results",
+    w2_p: "Accepted into university linguistics programmes. Candidates who got the job after our sessions. Children who stopped dreading English class.",
+    w3_h: "Lessons that fit your life",
+    w3_p: "100% online, flexible scheduling. Mornings, evenings, weekends — we work around your calendar.",
+    w4_h: "One teacher for the whole family",
+    w4_p: "Young children, teenagers, adults — every lesson is shaped around the person, not a fixed template.",
+    t_label: "What students say",
+    t_title: "Results speak for themselves",
+    t1_quote: "I'd failed two interviews in English before we started working together. Six weeks later I had an offer from a British company. The preparation made all the difference.",
+    t1_author: "Martin K.",
+    t1_result: "✓ Hired at an international firm",
+    t2_quote: "My daughter used to get anxious before English class. Now she's the one putting her hand up to read aloud. The lessons feel more like games than studying.",
+    t2_author: "Petra N., parent",
+    t2_result: "✓ Top of her class by year-end",
+    t3_quote: "I got into a linguistics programme in the Netherlands. Jana helped me with my motivation letter and the entrance interview. I really couldn't have done it without her.",
+    t3_author: "Tereza M.",
+    t3_result: "✓ Accepted to university in the Netherlands",
+    how_label: "Getting started",
+    how_title: "Simple from day one",
+    step1_h: "Book a free trial",
+    step1_p: "Fill in the short form and I'll confirm a time within 24 hours.",
+    step2_h: "We talk about your goals",
+    step2_p: "The trial lesson is a conversation — no test, no pressure.",
+    step3_h: "I build your learning plan",
+    step3_p: "Based on what we discuss, I tailor every lesson to what you actually need.",
+    step4_h: "You start making progress",
+    step4_p: "Regular sessions, clear feedback, and real improvement you can feel.",
+    cta_label: "Ready?",
+    cta_h2_html: "Your first lesson is free.",
+    cta_p: "No commitment needed. Book a 30-minute trial and let's see if we're a good fit.",
+    cta_btn: "Book a Free Trial Lesson",
+    cta_note: "Online · All ages · Flexible schedule",
+    footer_mid: "Online worldwide",
+    footer_copy: "© 2026 English with Vlad",
+    modal_h3: "Book a Free Trial",
+    modal_p: "I'll be in touch within 24 hours to confirm your time.",
+    form_fname: "First name", form_fname_ph: "Your name",
+    form_lname: "Last name", form_lname_ph: "Your surname",
+    form_email: "Email address",
+    form_phone: "Phone number (optional)",
+    form_phone_ph: "+420 123 456 789",
+    form_contact_label: "Preferred way to contact you",
+    fc1: "Email",
+    fc2: "Phone / WhatsApp",
+    fc3: "Either is fine",
+    form_interest_label: "I'm looking for help with",
+    fi1: "Job interview preparation", fi2: "Business English", fi3: "English for travel",
+    fi4: "University admissions", fi5: "Lessons for my child", fi6: "General / exam English", fi7: "Not sure yet",
+    form_notes_label: "Anything else you'd like me to know (optional)",
+    form_notes_ph: "Your current level, availability, specific goals...",
+    form_submit: "Send →",
+    price_label: "Pricing",
+    price_title: "Clear, simple rates",
+    price_sub: "All lessons are one-on-one. The first trial lesson is always free.",
+    p_60min: "60 minutes",
+    p_90min: "90 minutes",
+    p_from: "per session",
+    p1_title: "General English",
+    p1_note: "Covers travel, everyday conversation, and general exam prep.",
+    p2_title: "Business English",
+    p2_note: "Professional communication, emails, presentations, and meetings.",
+    p3_title: "Interview Preparation",
+    p3_note: "Price varies based on session length and depth of preparation needed.",
+    p4_title: "Children",
+    p4_note: "Fun, structured lessons adapted to the child's age and level.",
+    success_h: "Thanks, I'll be in touch!",
+    success_p: "I'll confirm your lesson time within 24 hours.",
+    success_close: "Close"
+  },
+  ru: {
+    nav_cta: "Записаться",
+    hero_badge: "Опыт работы с американской компанией · Онлайн",
+    hero_h1_html: "Говорите по-английски <em>уверенно</em>",
+    hero_sub: "Индивидуальные уроки под вашу конкретную цель — собеседование, деловая переписка, путешествия или просто свободная речь. Занимаюсь со взрослыми и детьми.",
+    hero_btn_primary: "Записаться на бесплатный пробный урок",
+    hero_btn_secondary: "Что я преподаю",
+    ic1_label: "Формат",
+    ic1_value: "Онлайн — Zoom, Google Meet или VooV",
+    ic2_label: "Опыт",
+    ic2_value: "Работала с американской компанией",
+    ic2_small: "Понимаю, чего ждут международные работодатели",
+    ic3_label: "Студенты",
+    ic3_value: "Взрослые и дети, любой уровень",
+    ic4_label: "Первый урок",
+    ic4_value: "Бесплатно — без обязательств",
+    ic4_small: "Посмотрим, подходим ли мы друг другу",
+    srv_label: "Что я преподаю",
+    srv_title: "Уроки под вашу задачу",
+    srv_sub: "Каждое занятие строится вокруг вашей цели — никаких шаблонных учебников.",
+    s1_title: "Подготовка к собеседованию",
+    s1_desc: "Много лет в рекрутинге в американской компании. Помогу выстроить ответы, отработать интонацию и прийти на интервью действительно подготовленным.",
+    s1_tag: "Взрослые · Любой уровень",
+    s2_title: "Деловой английский",
+    s2_desc: "Письма, презентации, переговоры, встречи. Учимся звучать естественно и профессионально — не как перевод с русского.",
+    s2_tag: "Взрослые · Специалисты",
+    s3_title: "Английский для путешествий",
+    s3_desc: "Аэропорты, отели, непредвиденные ситуации. Нарабатываем уверенность, чтобы справляться с любым разговором в поездке.",
+    s3_tag: "Взрослые и подростки",
+    s4_title: "Поступление в университет",
+    s4_desc: "Мотивационное письмо, вступительное интервью, академическое письмо. Мои студенты поступали в вузы по всей Европе.",
+    s4_tag: "Студенты · Молодые взрослые",
+    s5_title: "Английский для детей",
+    s5_desc: "Живые уроки, на которые дети хотят возвращаться. Игры, истории, разговор — без скучных упражнений из учебника.",
+    s5_tag: "Дети · Любой возраст",
+    s6_title: "Общий и экзаменационный английский",
+    s6_desc: "Хотите просто лучше говорить в жизни или готовитесь к Cambridge, IELTS, TOEFL — работаем в вашем темпе.",
+    s6_tag: "Любой возраст · Любой уровень",
+    why_label: "Немного о себе",
+    why_title: "Преподаю из реального опыта",
+    why_sub: "За плечами — работа с международными командами и реальные ситуации, где английский был рабочим языком.",
+    w1_h: "Опыт работы с американской компанией",
+    w1_p: "Работала в рекрутинге с американской командой — понимаю, как звучит уверенный кандидат на практике.",
+    w2_h: "Студенты с результатами",
+    w2_p: "Поступления на лингвистику в Европе. Офферы после подготовки к собеседованиям. Дети, которые перестали бояться английского.",
+    w3_h: "Уроки вокруг вашего расписания",
+    w3_p: "100% онлайн, гибкое расписание. Утром, вечером, в выходные — подстраиваюсь под вас.",
+    w4_h: "Один преподаватель для всей семьи",
+    w4_p: "Работаю с детьми, подростками и взрослыми. Каждое занятие под конкретного человека.",
+    t_label: "Отзывы",
+    t_title: "Результаты говорят сами",
+    t1_quote: "До наших занятий я дважды проваливал собеседования на английском. Через шесть недель получил оффер от британской компании. Подготовка изменила всё.",
+    t1_author: "Мартин К.",
+    t1_result: "✓ Нашёл работу в международной компании",
+    t2_quote: "Моя дочь раньше боялась уроков английского. Теперь сама тянет руку, чтобы читать вслух. Занятия больше похожи на игру, чем на учёбу.",
+    t2_author: "Петра Н., мама",
+    t2_result: "✓ Лучшие оценки к концу года",
+    t3_quote: "Поступила на лингвистику в Нидерланды. Яна помогла с мотивационным письмом и подготовкой к интервью. Без неё я бы не справилась.",
+    t3_author: "Тереза М.",
+    t3_result: "✓ Поступила в университет в Нидерландах",
+    how_label: "С чего начать",
+    how_title: "Всё очень просто",
+    step1_h: "Записываетесь на пробный урок",
+    step1_p: "Заполните короткую форму — отвечу в течение 24 часов.",
+    step2_h: "Говорим о ваших целях",
+    step2_p: "Пробный урок — это разговор, не тест и не экзамен.",
+    step3_h: "Составляю ваш план",
+    step3_p: "На основе нашей беседы каждый урок строится под вас.",
+    step4_h: "Вы начинаете расти",
+    step4_p: "Регулярные занятия, честная обратная связь, заметный прогресс.",
+    cta_label: "Готовы начать?",
+    cta_h2_html: "Первый урок — бесплатно.",
+    cta_p: "Никаких обязательств. Запишитесь на 30-минутный пробный урок и посмотрим, как я могу вам помочь.",
+    cta_btn: "Записаться на бесплатный урок",
+    cta_note: "Онлайн · Любой возраст · Гибкое расписание",
+    footer_mid: "Онлайн по всему миру",
+    footer_copy: "© 2026 English with Vlad",
+    modal_h3: "Пробный урок",
+    modal_p: "Подтвержу время в течение 24 часов.",
+    form_fname: "Имя", form_fname_ph: "Ваше имя",
+    form_lname: "Фамилия", form_lname_ph: "Ваша фамилия",
+    form_email: "Электронная почта",
+    form_phone: "Телефон (необязательно)",
+    form_phone_ph: "+7 900 000 00 00",
+    form_contact_label: "Как вам удобнее ответить",
+    fc1: "Электронная почта",
+    fc2: "Телефон / WhatsApp",
+    fc3: "Любым способом",
+    form_interest_label: "Мне нужна помощь с",
+    fi1: "Подготовкой к собеседованию", fi2: "Деловым английским", fi3: "Английским для путешествий",
+    fi4: "Поступлением в университет", fi5: "Уроками для моего ребёнка", fi6: "Общим / экзаменационным английским", fi7: "Пока не знаю",
+    form_notes_label: "Что-то ещё, что стоит знать (необязательно)",
+    form_notes_ph: "Ваш уровень, удобное время, конкретные цели...",
+    form_submit: "Отправить →",
+    price_label: "Стоимость",
+    price_title: "Прозрачные цены",
+    price_sub: "Все занятия индивидуальные. Первый пробный урок — всегда бесплатно.",
+    p_60min: "60 минут",
+    p_90min: "90 минут",
+    p_from: "за занятие",
+    p1_title: "Общий английский",
+    p1_note: "Путешествия, разговорный язык, подготовка к экзаменам.",
+    p2_title: "Деловой английский",
+    p2_note: "Переписка, презентации, переговоры, встречи.",
+    p3_title: "Подготовка к собеседованию",
+    p3_note: "Цена зависит от длительности и глубины подготовки.",
+    p4_title: "Дети",
+    p4_note: "Живые, структурированные уроки с учётом возраста и уровня.",
+    success_h: "Отлично, скоро напишу!",
+    success_p: "Подтвержу время вашего урока в течение 24 часов.",
+    success_close: "Закрыть"
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  const body = document.getElementById('page-body');
+  body.classList.add('fading');
+  setTimeout(() => {
+    currentLang = lang;
+    applyTranslations();
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+    document.documentElement.lang = lang;
+    body.classList.remove('fading');
+  }, 180);
+}
+
+function applyTranslations() {
+  const t = i18n[currentLang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (!(key in t)) return;
+    if (key.endsWith('_html')) el.innerHTML = t[key];
+    else el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-placeholder-t]').forEach(el => {
+    const key = el.getAttribute('data-placeholder-t');
+    if (key in t) el.placeholder = t[key];
+  });
+}
+
+applyTranslations();
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  try {
+    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() });
+  } catch(err) { /* still show success — Netlify usually catches it */ }
+  const t = i18n[currentLang];
+  document.getElementById('modal-inner').innerHTML = `
+    <div style="text-align:center;padding:2.5rem 0;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
+      <h3 style="font-family:'Playfair Display',serif;color:var(--dark);font-size:1.6rem;margin-bottom:0.6rem;">${t.success_h}</h3>
+      <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;">${t.success_p}</p>
+      <button class="btn-primary" onclick="closeModal()" style="margin-top:1.8rem;width:100%;padding:0.85rem">${t.success_close}</button>
+    </div>`;
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
