@@ -161,6 +161,7 @@
   .price-card.featured .price-amount { color: var(--gold); }
   .price-note { font-size: 0.75rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
   .price-card.featured .price-note { color: rgba(249,245,238,0.4); }
+  .popular-tag { display: inline-block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--terracotta); border: 1px solid var(--terracotta); padding: 0.2rem 0.5rem; }
 
   .lang-fade { transition: opacity 0.18s ease; }
   .lang-fade.fading { opacity: 0; }
@@ -307,7 +308,8 @@
       <div class="price-row"><span class="price-duration" data-t="p_90min"></span><span class="price-amount">800 CZK</span></div>
       <div class="price-note" data-t="p1_note"></div>
     </div>
-    <div class="price-card featured">
+    <div class="price-card">
+      <div style="position:absolute;top:1rem;right:1rem;" class="popular-tag" data-t="popular_tag"></div>
       <div class="price-icon">📊</div>
       <div class="price-title" data-t="p2_title"></div>
       <div class="price-row"><span class="price-duration" data-t="p_60min"></span><span class="price-amount">700 CZK</span></div>
@@ -451,14 +453,14 @@ const i18n = {
     w4_p: "Young children, teenagers, adults — every lesson is shaped around the person, not a fixed template.",
     t_label: "What students say",
     t_title: "Results speak for themselves",
-    t1_quote: "I'd failed two interviews in English before we started working together. Six weeks later I had an offer from a British company. The preparation made all the difference.",
-    t1_author: "Martin K.",
-    t1_result: "✓ Hired at an international firm",
-    t2_quote: "My daughter used to get anxious before English class. Now she's the one putting her hand up to read aloud. The lessons feel more like games than studying.",
-    t2_author: "Petra N., parent",
-    t2_result: "✓ Top of her class by year-end",
-    t3_quote: "I got into a linguistics programme in the Netherlands. Jana helped me with my motivation letter and the entrance interview. I really couldn't have done it without her.",
-    t3_author: "Tereza M.",
+    t1_quote: "We rehearsed the interview, the English was excellent and the session was genuinely useful. I recommend Vlad as a specialist.",
+    t1_author: "Kirill B.",
+    t1_result: "✓ Interview preparation",
+    t2_quote: "We've been doing classes with Vlad for two years now, since my daughter was 7. Her English has come on so much — she's confident, engaged, and genuinely enjoys the lessons.",
+    t2_author: "Parent",
+    t2_result: "✓ 2 years of lessons, started age 7",
+    t3_quote: "I needed to pass the English entrance test for the Prague University of Economics. Vlad structured the preparation really well and I passed. Exactly the help I needed.",
+    t3_author: "Student",
     t3_result: "✓ Accepted to university in the Netherlands",
     how_label: "Getting started",
     how_title: "Simple from day one",
@@ -494,6 +496,7 @@ const i18n = {
     form_notes_label: "Anything else you'd like me to know (optional)",
     form_notes_ph: "Your current level, availability, specific goals...",
     form_submit: "Send →",
+    popular_tag: "Popular",
     price_label: "Pricing",
     price_title: "Clear, simple rates",
     price_sub: "All lessons are one-on-one. The first trial lesson is always free.",
@@ -522,7 +525,7 @@ const i18n = {
     ic1_label: "Формат",
     ic1_value: "Онлайн — Zoom, Google Meet или VooV",
     ic2_label: "Опыт",
-    ic2_value: "Работала с американской компанией",
+    ic2_value: "Работал с американской компанией",
     ic2_small: "Понимаю, чего ждут международные работодатели",
     ic3_label: "Студенты",
     ic3_value: "Взрослые и дети, любой уровень",
@@ -552,9 +555,9 @@ const i18n = {
     s6_tag: "Любой возраст · Любой уровень",
     why_label: "Немного о себе",
     why_title: "Преподаю из реального опыта",
-    why_sub: "За плечами — работа с международными командами и реальные ситуации, где английский был рабочим языком.",
+    why_sub: "За плечами — работа с международной командой и реальные ситуации, где английский был рабочим языком.",
     w1_h: "Опыт работы с американской компанией",
-    w1_p: "Работала в рекрутинге с американской командой — понимаю, как звучит уверенный кандидат на практике.",
+    w1_p: "Работал в рекрутинге с американской командой — понимаю, как звучит уверенный кандидат на практике.",
     w2_h: "Студенты с результатами",
     w2_p: "Поступления на лингвистику в Европе. Офферы после подготовки к собеседованиям. Дети, которые перестали бояться английского.",
     w3_h: "Уроки вокруг вашего расписания",
@@ -563,15 +566,15 @@ const i18n = {
     w4_p: "Работаю с детьми, подростками и взрослыми. Каждое занятие под конкретного человека.",
     t_label: "Отзывы",
     t_title: "Результаты говорят сами",
-    t1_quote: "До наших занятий я дважды проваливал собеседования на английском. Через шесть недель получил оффер от британской компании. Подготовка изменила всё.",
-    t1_author: "Мартин К.",
-    t1_result: "✓ Нашёл работу в международной компании",
-    t2_quote: "Моя дочь раньше боялась уроков английского. Теперь сама тянет руку, чтобы читать вслух. Занятия больше похожи на игру, чем на учёбу.",
-    t2_author: "Петра Н., мама",
-    t2_result: "✓ Лучшие оценки к концу года",
-    t3_quote: "Поступила на лингвистику в Нидерланды. Яна помогла с мотивационным письмом и подготовкой к интервью. Без неё я бы не справилась.",
-    t3_author: "Тереза М.",
-    t3_result: "✓ Поступила в университет в Нидерландах",
+    t1_quote: "Всё супер! Отрепетировали интервью, шикарный английский и эта встреча безусловно мне полезна. Рекомендую Владимира как специалиста!",
+    t1_author: "Кирилл Б.",
+    t1_result: "✓ Подготовка к собеседованию",
+    t2_quote: "Занимаемся с Владом уже два года, дочка начала с 7 лет. Английский вырос очень заметно — она уверенная, с удовольствием идёт на урок и сама просит заниматься.",
+    t2_author: "Мама ученицы",
+    t2_result: "✓ 2 года занятий, начали с 7 лет",
+    t3_quote: "Готовилась к вступительному экзамену по английскому в Пражский экономический университет. Влад очень чётко выстроил подготовку, и я сдала. Именно та помощь, которая была нужна.",
+    t3_author: "Студентка",
+    t3_result: "✓ Поступила в Пражский экономический университет",
     how_label: "С чего начать",
     how_title: "Всё очень просто",
     step1_h: "Записываетесь на пробный урок",
@@ -606,6 +609,7 @@ const i18n = {
     form_notes_label: "Что-то ещё, что стоит знать (необязательно)",
     form_notes_ph: "Ваш уровень, удобное время, конкретные цели...",
     form_submit: "Отправить →",
+    popular_tag: "Популярно",
     price_label: "Стоимость",
     price_title: "Прозрачные цены",
     price_sub: "Все занятия индивидуальные. Первый пробный урок — всегда бесплатно.",
