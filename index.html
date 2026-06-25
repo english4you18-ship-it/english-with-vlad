@@ -46,7 +46,9 @@
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 60%); pointer-events: none; }
 
   .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 4rem 6rem; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); padding: 0.35rem 0.9rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 1.8rem; width: fit-content; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); padding: 0.35rem 0.9rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--terracotta); width: fit-content; }
+  .hero-badge-tefl { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 700; }
   .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 4vw, 3.8rem); line-height: 1.15; color: var(--dark); margin-bottom: 1.3rem; }
   .hero h1 em { font-style: italic; color: var(--gold); }
   .hero-sub { font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 420px; margin-bottom: 2.2rem; }
@@ -92,6 +94,18 @@
   .why-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); opacity: 0.45; line-height: 1; flex-shrink: 0; width: 2rem; }
   .why-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; color: #fff; }
   .why-text p { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* CREDENTIALS / TEFL */
+  .cert-section { padding: 5.5rem 6rem; background: var(--cream); display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: center; }
+  .cert-image-wrap { position: relative; }
+  .cert-image-wrap img { width: 100%; height: auto; display: block; border: 1px solid rgba(26,26,46,0.1); box-shadow: 0 14px 40px rgba(26,26,46,0.14); background: white; }
+  .cert-placeholder { width: 100%; aspect-ratio: 4 / 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; background: white; border: 1.5px dashed rgba(201,168,76,0.55); color: var(--muted); text-align: center; padding: 1.5rem; }
+  .cert-placeholder .ph-icon { font-size: 2rem; }
+  .cert-placeholder .ph-text { font-size: 0.85rem; line-height: 1.5; max-width: 240px; }
+  .cert-caption { margin-top: 0.9rem; font-size: 0.78rem; color: var(--muted); font-style: italic; text-align: center; }
+  .cert-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35); padding: 0.35rem 0.9rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 1.4rem; width: fit-content; }
+  .cert-text .section-title { margin-bottom: 1.1rem; }
+  .cert-text p { font-size: 0.98rem; color: var(--text); line-height: 1.8; max-width: 460px; }
 
   /* TESTIMONIALS */
   .testimonials-section { padding: 5.5rem 6rem; background: white; }
@@ -173,6 +187,7 @@
     .info-card { max-width: 100%; }
     .section { padding: 4rem 2rem; }
     .why-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 2rem; }
+    .cert-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 2rem; }
     .services-grid { grid-template-columns: 1fr; gap: 1px; }
     .testimonials-section { padding: 4rem 2rem; }
     .testimonials-grid { grid-template-columns: 1fr; }
@@ -209,7 +224,10 @@
 
 <section class="hero lang-fade" id="page-body">
   <div class="hero-left">
-    <div class="hero-badge" data-t="hero_badge"></div>
+    <div class="hero-badges">
+      <div class="hero-badge" data-t="hero_badge"></div>
+      <div class="hero-badge hero-badge-tefl" data-t="hero_badge_tefl"></div>
+    </div>
     <h1 data-t="hero_h1_html"></h1>
     <p class="hero-sub" data-t="hero_sub"></p>
     <div class="hero-btns">
@@ -272,6 +290,27 @@
     <div class="why-item"><div class="why-num">02</div><div class="why-text"><h4 data-t="w2_h"></h4><p data-t="w2_p"></p></div></div>
     <div class="why-item"><div class="why-num">03</div><div class="why-text"><h4 data-t="w3_h"></h4><p data-t="w3_p"></p></div></div>
     <div class="why-item"><div class="why-num">04</div><div class="why-text"><h4 data-t="w4_h"></h4><p data-t="w4_p"></p></div></div>
+  </div>
+</section>
+
+<section class="cert-section" id="credentials">
+  <div class="cert-image-wrap">
+    <!-- TEFL CERTIFICATE IMAGE:
+         Upload your certificate to the same folder as this file and name it
+         "certificate.jpg" (or change the src below to match your filename).
+         While no image is present, a placeholder is shown automatically. -->
+    <img src="certificate.jpg" alt="TEFL certificate"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="cert-placeholder" style="display:none;">
+      <div class="ph-icon">📜</div>
+      <div class="ph-text" data-t="cert_ph"></div>
+    </div>
+    <div class="cert-caption" data-t="cert_caption"></div>
+  </div>
+  <div class="cert-text">
+    <div class="cert-badge" data-t="cert_badge"></div>
+    <h2 class="section-title" data-t="cert_title"></h2>
+    <p data-t="cert_p"></p>
   </div>
 </section>
 
@@ -346,55 +385,6 @@
   <div data-t="footer_copy"></div>
 </footer>
 
-<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal-inner">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <h3 data-t="modal_h3"></h3>
-    <p data-t="modal_p"></p>
-    <!-- Netlify Forms: the netlify attribute + hidden form-name field wire this up automatically -->
-    <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
-      <input type="hidden" name="form-name" value="booking">
-      <input type="hidden" name="bot-field" style="display:none">
-      <div class="form-row">
-        <div class="form-group">
-          <label data-t="form_fname"></label>
-          <input type="text" name="first-name" data-placeholder-t="form_fname_ph" required>
-        </div>
-        <div class="form-group">
-          <label data-t="form_lname"></label>
-          <input type="text" name="last-name" data-placeholder-t="form_lname_ph">
-        </div>
-      </div>
-      <div class="form-group">
-        <label data-t="form_email"></label>
-        <input type="email" name="email" placeholder="you@example.com" required>
-      </div>
-      <div class="form-group">
-        <label data-t="form_phone"></label>
-        <input type="tel" name="phone" data-placeholder-t="form_phone_ph">
-      </div>
-      <div class="form-group">
-        <label data-t="form_contact_label"></label>
-        <select name="preferred-contact">
-          <option data-t="fc1"></option><option data-t="fc2"></option><option data-t="fc3"></option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label data-t="form_interest_label"></label>
-        <select name="interest">
-          <option data-t="fi1"></option><option data-t="fi2"></option><option data-t="fi3"></option>
-          <option data-t="fi4"></option><option data-t="fi5"></option><option data-t="fi6"></option><option data-t="fi7"></option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label data-t="form_notes_label"></label>
-        <textarea name="notes" data-placeholder-t="form_notes_ph"></textarea>
-      </div>
-      <button type="submit" class="btn-primary" data-t="form_submit"></button>
-    </form>
-  </div>
-</div>
-
 <script>
 function openCal(e) {
   e.preventDefault();
@@ -405,6 +395,7 @@ const i18n = {
   en: {
     nav_cta: "Book a Trial",
     hero_badge: "Former US Corporate Recruiter · Online",
+    hero_badge_tefl: "📜 TEFL Certified",
     hero_h1_html: "Speak English with <em>real confidence</em>",
     hero_sub: "One-on-one lessons focused on what actually matters to you — job interviews, professional communication, travel, or everyday fluency. Adults and children welcome.",
     hero_btn_primary: "Book a Free Trial Lesson",
@@ -451,6 +442,11 @@ const i18n = {
     w3_p: "100% online, flexible scheduling. Mornings, evenings, weekends — we work around your calendar.",
     w4_h: "One teacher for the whole family",
     w4_p: "Young children, teenagers, adults — every lesson is shaped around the person, not a fixed template.",
+    cert_badge: "Qualified Teacher",
+    cert_title: "A TEFL-certified English teacher",
+    cert_p: "I'm a TEFL-certified teacher (Teaching English as a Foreign Language) — internationally recognised training in how to teach English effectively to people for whom it isn't their first language. In practice, that means your lessons are built on proven teaching methods, not guesswork, and tailored to how adults and children actually learn a language.",
+    cert_caption: "My TEFL certificate",
+    cert_ph: "Certificate image coming soon — add a file named “certificate.jpg” to display it here.",
     t_label: "What students say",
     t_title: "Results speak for themselves",
     t1_quote: "We rehearsed the interview, the English was excellent and the session was genuinely useful. I recommend Vlad as a specialist.",
@@ -461,11 +457,11 @@ const i18n = {
     t2_result: "✓ 2 years of lessons, started age 7",
     t3_quote: "I needed to pass the English entrance test for the Prague University of Economics. Vlad structured the preparation really well and I passed. Exactly the help I needed.",
     t3_author: "Student",
-    t3_result: "✓ Accepted to university in the Netherlands",
+    t3_result: "✓ Accepted to the Prague University of Economics",
     how_label: "Getting started",
     how_title: "Simple from day one",
     step1_h: "Book a free trial",
-    step1_p: "Fill in the short form and I'll confirm a time within 24 hours.",
+    step1_p: "Pick a time that suits you straight from my calendar — it takes less than a minute.",
     step2_h: "We talk about your goals",
     step2_p: "The trial lesson is a conversation — no test, no pressure.",
     step3_h: "I build your learning plan",
@@ -518,6 +514,7 @@ const i18n = {
   ru: {
     nav_cta: "Записаться",
     hero_badge: "Опыт работы с американской компанией · Онлайн",
+    hero_badge_tefl: "📜 Сертификат TEFL",
     hero_h1_html: "Говорите по-английски <em>уверенно</em>",
     hero_sub: "Индивидуальные уроки под вашу конкретную цель — собеседование, деловая переписка, путешествия или просто свободная речь. Занимаюсь со взрослыми и детьми.",
     hero_btn_primary: "Записаться на бесплатный пробный урок",
@@ -564,6 +561,11 @@ const i18n = {
     w3_p: "100% онлайн, гибкое расписание. Утром, вечером, в выходные — подстраиваюсь под вас.",
     w4_h: "Один преподаватель для всей семьи",
     w4_p: "Работаю с детьми, подростками и взрослыми. Каждое занятие под конкретного человека.",
+    cert_badge: "Квалифицированный преподаватель",
+    cert_title: "Сертифицированный преподаватель TEFL",
+    cert_p: "У меня есть сертификат TEFL (преподавание английского как иностранного) — это международно признанная подготовка по методике обучения английскому для тех, для кого он не родной. На практике это значит, что уроки строятся на проверенных методиках, а не наугад, и учитывают, как взрослые и дети на самом деле осваивают язык.",
+    cert_caption: "Мой сертификат TEFL",
+    cert_ph: "Изображение сертификата скоро появится — добавьте файл «certificate.jpg», чтобы он отображался здесь.",
     t_label: "Отзывы",
     t_title: "Результаты говорят сами",
     t1_quote: "Всё супер! Отрепетировали интервью, шикарный английский и эта встреча безусловно мне полезна. Рекомендую Владимира как специалиста!",
@@ -573,12 +575,12 @@ const i18n = {
     t2_author: "Мама ученицы",
     t2_result: "✓ 2 года занятий, начали с 7 лет",
     t3_quote: "Готовился к вступительному экзамену по английскому в Пражский экономический университет. Владимир очень чётко выстроил подготовку, и я сдал. Именно та помощь, которая была нужна.",
-    t3_author: "Студентк",
+    t3_author: "Студент",
     t3_result: "✓ Поступил в Пражский экономический университет",
     how_label: "С чего начать",
     how_title: "Всё очень просто",
     step1_h: "Записываетесь на пробный урок",
-    step1_p: "Заполните короткую форму — отвечу в течение 24 часов.",
+    step1_p: "Выберите удобное время прямо в моём календаре — это займёт меньше минуты.",
     step2_h: "Говорим о ваших целях",
     step2_p: "Пробный урок — это разговор, не тест и не экзамен.",
     step3_h: "Составляю ваш план",
@@ -661,35 +663,6 @@ function applyTranslations() {
 }
 
 applyTranslations();
-
-function openModal() {
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('modal')) closeModal();
-}
-async function handleSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-  try {
-    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() });
-  } catch(err) { /* still show success — Netlify usually catches it */ }
-  const t = i18n[currentLang];
-  document.getElementById('modal-inner').innerHTML = `
-    <div style="text-align:center;padding:2.5rem 0;">
-      <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
-      <h3 style="font-family:'Playfair Display',serif;color:var(--dark);font-size:1.6rem;margin-bottom:0.6rem;">${t.success_h}</h3>
-      <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;">${t.success_p}</p>
-      <button class="btn-primary" onclick="closeModal()" style="margin-top:1.8rem;width:100%;padding:0.85rem">${t.success_close}</button>
-    </div>`;
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
